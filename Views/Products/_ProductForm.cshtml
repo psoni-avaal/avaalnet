@@ -1,0 +1,43 @@
+@model BasicDotNetPostgresWebsite.Models.Product
+
+<div class="form-field">
+    <label asp-for="Name">Product name</label>
+    <input asp-for="Name" maxlength="120" required />
+    <span asp-validation-for="Name" class="text-danger"></span>
+</div>
+<div class="form-row two-col">
+    <div class="form-field">
+        <label asp-for="CategoryId">Category</label>
+        <select asp-for="CategoryId" asp-items="ViewBag.Categories"><option value="">Choose category</option></select>
+        <span asp-validation-for="CategoryId" class="text-danger"></span>
+    </div>
+    <div class="form-field">
+        <label asp-for="Unit">Unit or pack size</label>
+        <input asp-for="Unit" maxlength="40" placeholder="e.g. 500 g" required />
+        <span asp-validation-for="Unit" class="text-danger"></span>
+    </div>
+</div>
+<div class="form-row two-col">
+    <div class="form-field">
+        <label asp-for="Price">Selling price (₹)</label>
+        <input asp-for="Price" type="number" min="0.01" step="0.01" required />
+        <span asp-validation-for="Price" class="text-danger"></span>
+    </div>
+    <div class="form-field">
+        <label asp-for="OriginalPrice">Original price (optional)</label>
+        <input asp-for="OriginalPrice" type="number" min="0.01" step="0.01" />
+        <span asp-validation-for="OriginalPrice" class="text-danger"></span>
+    </div>
+</div>
+<div class="form-row two-col">
+    <div class="form-field">
+        <label asp-for="StockQuantity">Stock quantity</label>
+        <input asp-for="StockQuantity" type="number" min="0" max="100000" required />
+        <span asp-validation-for="StockQuantity" class="text-danger"></span>
+    </div>
+    <div class="form-field">
+        <label asp-for="Image">Product image</label>
+        <input asp-for="Image" type="file" accept=".jpg,.jpeg,.png,.webp,image/jpeg,image/png,image/webp" />
+        <span asp-validation-for="Image" class="text-danger"></span>
+    </div>
+</div>

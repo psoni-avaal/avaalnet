@@ -1,0 +1,91 @@
+@model BasicDotNetPostgresWebsite.Models.CartCheckoutViewModel
+
+@{
+    ViewData["Title"] = "Secure checkout";
+}
+
+<partial name="_QuickBasketHeader" />
+
+<main class="cart-checkout-page">
+    <a asp-controller="Home" asp-action="Index" class="qb-back-link">← Continue shopping</a>
+    <header class="checkout-heading">
+        <span class="eyebrow">FINAL STEP</span>
+        <h1>Secure checkout</h1>
+        <p>Review your basket and confirm where we should send your order.</p>
+    </header>
+
+    <div class="cart-checkout-layout">
+        <form asp-action="Checkout" method="post" class="checkout-form cart-customer-form">
+            @Html.AntiForgeryToken()
+            <div asp-validation-summary="ModelOnly" class="validation-summary"></div>
+
+            <section class="checkout-section">
+                <h2>Contact details</h2>
+                <div class="form-field">
+                    <label asp-for="CustomerName">Full name</label>
+                    <input asp-for="CustomerName" autocomplete="name" required />
+                    <span asp-validation-for="CustomerName" class="text-danger"></span>
+                </div>
+                <div class="form-row two-col">
+                    <div class="form-field">
+                        <label asp-for="Email">Email address</label>
+                        <input asp-for="Email" type="email" autocomplete="email" required />
+                        <span asp-validation-for="Email" class="text-danger"></span>
+                    </div>
+                    <div class="form-field">
+                        <label asp-for="Phone">Phone number</label>
+                        <input asp-for="Phone" type="tel" autocomplete="tel" required />
+                        <span asp-validation-for="Phone" class="text-danger"></span>
+                    </div>
+                </div>
+            </section>
+
+            <section class="checkout-section">
+                <h2>Delivery address</h2>
+                <div class="form-field">
+                    <label asp-for="Address">Address</label>
+                    <textarea asp-for="Address" rows="4" autocomplete="street-address" required></textarea>
+                    <span asp-validation-for="Address" class="text-danger"></span>
+                </div>
+                <div class="form-field">
+                    <label asp-for="DeliveryInstructions">Delivery instructions (optional)</label>
+                    <textarea asp-for="DeliveryInstructions" rows="2" maxlength="500" placeholder="Gate code, landmark, or drop-off note"></textarea>
+                    <span asp-validation-for="DeliveryInstructions" class="text-danger"></span>
+                </div>
+            </section>
+
+            <button type="submit" class="checkout-submit">Place demo order · ₹@Model.TotalAmount.ToString("N2")</button>
+        </form>
+
+        <aside class="checkout-order-card">
+            <div class="checkout-order-title">
+                <h2>Your basket</h2>
+                <span>@Model.Items.Sum(item => item.Quantity) items</span>
+            </div>
+
+            @foreach (var item in Model.Items)
+            {
+                <div class="checkout-line">
+                    <div class="checkout-line-image">
+                        @if (!string.IsNullOrWhiteSpace(item.ImageUrl))
+                        {
+                            <img src="@item.ImageUrl" alt="@item.Name" />
+                        }
+                        else
+                        {
+                            <span>✦</span>
+                        }
+                    </div>
+                    <div class="checkout-line-copy">
+                        <strong>@item.Name</strong>
+                        <span>Qty @item.Quantity · ₹@item.UnitPrice.ToString("N2") each</span>
+                    </div>
+                    <strong>₹@((item.UnitPrice * item.Quantity).ToString("N2"))</strong>
+                </div>
+            }
+
+            <div class="checkout-total"><span>Total</span><strong>₹@Model.TotalAmount.ToString("N2")</strong></div>
+            <p class="checkout-note">Demo checkout only. Your order is recorded; no online payment is processed.</p>
+        </aside>
+    </div>
+</main>

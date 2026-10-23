@@ -1,0 +1,26 @@
+@model BasicDotNetPostgresWebsite.Models.Product
+
+@{
+    ViewData["Title"] = "Edit grocery | QuickBasket";
+}
+
+<main class="qb-admin-page qb-admin-form-page">
+    <a asp-action="Index" class="qb-back-link">← Inventory</a>
+    <section class="qb-admin-form-card">
+        <span class="qb-kicker">PRODUCT INVENTORY</span>
+        <h1>Edit @Model.Name</h1>
+        <p>Update the customer-visible product details and stock.</p>
+        <form asp-action="Edit" asp-route-id="@Model.Id" method="post" enctype="multipart/form-data" class="qb-admin-form">
+            @Html.AntiForgeryToken()
+            <input asp-for="Id" type="hidden" />
+            <input asp-for="ImageUrl" type="hidden" />
+            <div asp-validation-summary="ModelOnly" class="validation-summary"></div>
+            @if (!string.IsNullOrWhiteSpace(Model.ImageUrl))
+            {
+                <img src="@Model.ImageUrl" alt="@Model.Name" class="qb-admin-current-image" />
+            }
+            <partial name="_ProductForm" model="Model" />
+            <button type="submit" class="qb-admin-primary">Save changes</button>
+        </form>
+    </section>
+</main>

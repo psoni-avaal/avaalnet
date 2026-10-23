@@ -1,0 +1,77 @@
+{
+  "Version": 1,
+  "Hash": "qQAv1ZJ0VMe7LVShPnYp85u5cf3nPcs3CnnMYsLi4JY=",
+  "Source": "BasicDotNetPostgresWebsite",
+  "BasePath": "_content/BasicDotNetPostgresWebsite",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [
+    {
+      "Name": "BasicDotNetPostgresWebsite/wwwroot",
+      "Source": "BasicDotNetPostgresWebsite",
+      "ContentRoot": "/home/test-pc1/Downloads/BasicDotNetPostgresWebsiten/wwwroot/",
+      "BasePath": "_content/BasicDotNetPostgresWebsite",
+      "Pattern": "**"
+    }
+  ],
+  "Assets": [
+    {
+      "Identity": "/home/test-pc1/Downloads/BasicDotNetPostgresWebsiten/wwwroot/css/site.css",
+      "SourceId": "BasicDotNetPostgresWebsite",
+      "SourceType": "Discovered",
+      "ContentRoot": "/home/test-pc1/Downloads/BasicDotNetPostgresWebsiten/wwwroot/",
+      "BasePath": "_content/BasicDotNetPostgresWebsite",
+      "RelativePath": "css/site.css",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot/css/site.css"
+    },
+    {
+      "Identity": "/home/test-pc1/Downloads/BasicDotNetPostgresWebsiten/wwwroot/js/quickbasket.js",
+      "SourceId": "BasicDotNetPostgresWebsite",
+      "SourceType": "Discovered",
+      "ContentRoot": "/home/test-pc1/Downloads/BasicDotNetPostgresWebsiten/wwwroot/",
+      "BasePath": "_content/BasicDotNetPostgresWebsite",
+      "RelativePath": "js/quickbasket.js",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot/js/quickbasket.js"
+    },
+    {
+      "Identity": "/home/test-pc1/Downloads/BasicDotNetPostgresWebsiten/wwwroot/uploads/e95105bbb02349e293669f0c0eb551bc.jpeg",
+      "SourceId": "BasicDotNetPostgresWebsite",
+      "SourceType": "Discovered",
+      "ContentRoot": "/home/test-pc1/Downloads/BasicDotNetPostgresWebsiten/wwwroot/",
+      "BasePath": "_content/BasicDotNetPostgresWebsite",
+      "RelativePath": "uploads/e95105bbb02349e293669f0c0eb551bc.jpeg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot/uploads/e95105bbb02349e293669f0c0eb551bc.jpeg"
+    }
+  ]
+}

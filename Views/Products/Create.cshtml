@@ -1,0 +1,20 @@
+@model BasicDotNetPostgresWebsite.Models.Product
+
+@{
+    ViewData["Title"] = "New grocery | QuickBasket";
+}
+
+<main class="qb-admin-page qb-admin-form-page">
+    <a asp-action="Index" class="qb-back-link">← Inventory</a>
+    <section class="qb-admin-form-card">
+        <span class="qb-kicker">PRODUCT INVENTORY</span>
+        <h1>Add a grocery</h1>
+        <p>This item will be available in the customer store after saving.</p>
+        <form asp-action="Create" method="post" enctype="multipart/form-data" class="qb-admin-form">
+            @Html.AntiForgeryToken()
+            <div asp-validation-summary="ModelOnly" class="validation-summary"></div>
+            <partial name="_ProductForm" model="Model" />
+            <button type="submit" class="qb-admin-primary">Save product</button>
+        </form>
+    </section>
+</main>

@@ -1,0 +1,45 @@
+@model BasicDotNetPostgresWebsite.Models.LoginViewModel
+
+@{
+    ViewData["Title"] = "Sign in";
+}
+
+<main class="account-page">
+    <a asp-controller="Home" asp-action="Index" class="qb-brand account-brand">
+        <span class="qb-brand-mark">Q</span>
+        <span>QuickBasket</span>
+    </a>
+
+    <section class="account-card">
+        <span class="account-kicker">WELCOME BACK</span>
+        <h1>Sign in to your account</h1>
+        <p>Pick up where you left off and continue shopping.</p>
+
+        <form asp-action="Login" method="post" class="account-form">
+            @Html.AntiForgeryToken()
+            <input asp-for="ReturnUrl" type="hidden" />
+            <div asp-validation-summary="ModelOnly" class="validation-summary"></div>
+
+            <div class="form-field">
+                <label asp-for="Email">Email address</label>
+                <input asp-for="Email" type="email" autocomplete="email" required />
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+
+            <div class="form-field">
+                <label asp-for="Password">Password</label>
+                <input asp-for="Password" autocomplete="current-password" required />
+                <span asp-validation-for="Password" class="text-danger"></span>
+            </div>
+
+            <label class="remember-option">
+                <input asp-for="RememberMe" />
+                <span>Keep me signed in</span>
+            </label>
+
+            <button type="submit" class="btn btn-primary account-submit">Sign in</button>
+        </form>
+
+        <div class="account-switch">New here? <a asp-action="Register" asp-route-returnUrl="@Model.ReturnUrl">Create an account</a></div>
+    </section>
+</main>

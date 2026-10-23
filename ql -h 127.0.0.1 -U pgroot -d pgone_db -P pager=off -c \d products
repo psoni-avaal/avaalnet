@@ -1,0 +1,14 @@
+                                      Table "public.products"
+   Column    |          Type          | Collation | Nullable |               Default                
+-------------+------------------------+-----------+----------+--------------------------------------
+ id          | integer                |           | not null | nextval('products_id_seq'::regclass)
+ name        | character varying(150) |           | not null | 
+ price       | numeric(10,2)          |           | not null | 
+ category_id | integer                |           |          | 
+Indexes:
+    "products_pkey" PRIMARY KEY, btree (id)
+Check constraints:
+    "products_price_check" CHECK (price >= 0::numeric)
+Foreign-key constraints:
+    "products_category_id_fkey" FOREIGN KEY (category_id) REFERENCES categories(id)
+

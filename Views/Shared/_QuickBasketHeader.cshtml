@@ -1,0 +1,54 @@
+<header class="qb-header qb-secondary-header">
+    <a asp-controller="Home" asp-action="Index" class="qb-brand" aria-label="QuickBasket home">
+        <span class="qb-brand-mark" aria-hidden="true">Q</span>
+        <span>QuickBasket</span>
+    </a>
+    <div class="qb-location">
+        <span class="qb-location-pin" aria-hidden="true">⌖</span>
+        <div>
+            <span class="qb-location-label">DELIVERING TO</span>
+            <strong id="delivery-location">Indiranagar, Bengaluru</strong>
+            <span class="qb-delivery-time">Delivery in 10–20 minutes</span>
+        </div>
+    </div>
+    <form method="get" asp-controller="Home" asp-action="Index" class="qb-search">
+        <span aria-hidden="true">⌕</span>
+        <input type="search" name="search" placeholder="Search groceries and essentials" aria-label="Search groceries" />
+        <button type="submit">Search</button>
+    </form>
+    <div class="qb-header-actions">
+        @if (User.Identity?.IsAuthenticated == true)
+        {
+            <span class="qb-account-name">@User.Identity.Name</span>
+            <form asp-controller="Account" asp-action="Logout" method="post">
+                @Html.AntiForgeryToken()
+                <button class="qb-signin" type="submit">Sign out</button>
+            </form>
+        }
+        else
+        {
+            <a asp-controller="Account" asp-action="Login" class="qb-signin">Login</a>
+        }
+        <button id="cart-toggle" type="button" class="qb-cart-button" aria-expanded="false" aria-controls="cart-drawer">
+            <span class="qb-cart-icon" aria-hidden="true">▱</span>
+            <span>Cart</span>
+            <span id="cart-count" class="qb-cart-count" hidden>0</span>
+        </button>
+    </div>
+</header>
+
+<div id="cart-drawer" class="qb-cart-drawer" aria-hidden="true">
+    <button type="button" class="qb-cart-backdrop" data-cart-close aria-label="Close cart"></button>
+    <section class="qb-cart-panel" role="dialog" aria-modal="true" aria-labelledby="cart-title">
+        <header class="qb-cart-heading">
+            <div><span class="qb-kicker">YOUR ORDER</span><h2 id="cart-title">Your cart</h2></div>
+            <button type="button" class="qb-close" data-cart-close aria-label="Close cart">×</button>
+        </header>
+        <div id="cart-items" class="qb-cart-items" aria-live="polite"></div>
+        <footer class="qb-cart-footer">
+            <div class="qb-cart-total"><span>Subtotal</span><strong id="cart-subtotal">₹0.00</strong></div>
+            <a id="cart-checkout" class="qb-checkout-button" href="/Cart/Checkout">Proceed to checkout</a>
+            <small>Demo checkout · No online payment</small>
+        </footer>
+    </section>
+</div>

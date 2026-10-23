@@ -1,0 +1,52 @@
+@model BasicDotNetPostgresWebsite.Models.Product
+
+@{
+    ViewData["Title"] = $"{Model.Name} | QuickBasket";
+}
+
+<partial name="_QuickBasketHeader" />
+
+<main class="qb-details-page">
+    <a asp-action="Index" class="qb-back-link">← Back to QuickBasket</a>
+    <section class="qb-details-layout">
+        <div class="qb-details-image">
+            @if (!string.IsNullOrWhiteSpace(Model.ImageUrl))
+            {
+                <img src="@Model.ImageUrl" alt="@Model.Name" data-product-image />
+            }
+            <span class="grocery-image-fallback" aria-hidden="true">🥬</span>
+        </div>
+        <div class="qb-details-copy">
+            <span class="qb-kicker">@(Model.Category?.Name ?? "QUICKBASKET GROCERY")</span>
+            <h1>@Model.Name</h1>
+            <p class="qb-details-unit">@Model.Unit</p>
+            <div class="qb-details-price">
+                <strong>₹@Model.Price.ToString("N2")</strong>
+                @if (Model.OriginalPrice is decimal originalPrice && originalPrice > Model.Price)
+                {
+                    <del>₹@originalPrice.ToString("N2")</del>
+                }
+            </div>
+            <p class="qb-details-stock">@(Model.StockQuantity > 0 ? $"{Model.StockQuantity} available" : "Currently sold out")</p>
+            <div class="qb-details-actions" data-cart-controls>
+                <button type="button"
+                        class="grocery-add-button"
+                        data-cart-add
+                        data-product-id="@Model.Id"
+                        data-product-name="@Model.Name"
+                        data-product-price="@Model.Price.ToString(System.Globalization.CultureInfo.InvariantCulture)"
+                        data-product-image="@Model.ImageUrl"
+                        data-max-stock="@Model.StockQuantity"
+                        disabled="@(Model.StockQuantity <= 0)">
+                    @(Model.StockQuantity > 0 ? "Add to cart" : "Sold out")
+                </button>
+                <div class="grocery-quantity-control" data-card-quantity hidden>
+                    <button type="button" data-card-decrease="@Model.Id" aria-label="Remove one @Model.Name">−</button>
+                    <span data-card-quantity-value>0</span>
+                    <button type="button" data-card-increase="@Model.Id" aria-label="Add one @Model.Name">+</button>
+                </div>
+            </div>
+            <div class="qb-delivery-promise"><span aria-hidden="true">◷</span><div><strong>Delivery in 10–20 minutes</strong><small>Sample delivery estimate for the selected area.</small></div></div>
+        </div>
+    </section>
+</main>

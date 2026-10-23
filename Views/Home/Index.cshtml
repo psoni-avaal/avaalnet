@@ -1,0 +1,242 @@
+
+@model BasicDotNetPostgresWebsite.Models.StorefrontViewModel
+
+@{
+    ViewData["Title"] = "QuickBasket | Groceries in minutes";
+    var hasFilters = !string.IsNullOrWhiteSpace(Model.Search) || !string.IsNullOrWhiteSpace(Model.Category);
+}
+
+<div class="quickbasket-app">
+    <header class="qb-header">
+        <a asp-controller="Home" asp-action="Index" class="qb-brand" aria-label="QuickBasket home">
+            <span class="qb-brand-mark" aria-hidden="true">Q</span>
+            <span>QuickBasket</span>
+        </a>
+
+        <div class="qb-location">
+            <span class="qb-location-pin" aria-hidden="true">⌖</span>
+            <div>
+                <span class="qb-location-label">DELIVERING TO</span>
+                <strong id="delivery-location">Indiranagar, Bengaluru</strong>
+                <span class="qb-delivery-time">Delivery in 10–20 minutes</span>
+            </div>
+            <button id="change-location" type="button" aria-label="Change delivery location">⌄</button>
+        </div>
+
+        <form method="get" asp-controller="Home" asp-action="Index" class="qb-search">
+            @if (!string.IsNullOrWhiteSpace(Model.Category))
+            {
+                <input type="hidden" name="category" value="@Model.Category" />
+            }
+            <span aria-hidden="true">⌕</span>
+            <input type="search" name="search" value="@Model.Search" placeholder="Search groceries and essentials" aria-label="Search groceries" />
+            <button type="submit">Search</button>
+        </form>
+
+        <div class="qb-header-actions">
+            @if (User.Identity?.IsAuthenticated == true)
+            {
+                <div class="qb-account">
+                    <span class="qb-account-avatar">@(User.Identity.Name?.FirstOrDefault().ToString().ToUpperInvariant() ?? "U")</span>
+                    <span class="qb-account-name">@User.Identity.Name</span>
+                </div>
+                <form asp-controller="Account" asp-action="Logout" method="post">
+                    @Html.AntiForgeryToken()
+                    <button class="qb-signin" type="submit">Sign out</button>
+                </form>
+            }
+            else
+            {
+                <a asp-controller="Account" asp-action="Login" class="qb-signin">Login</a>
+            }
+            <button id="cart-toggle" type="button" class="qb-cart-button" aria-expanded="false" aria-controls="cart-drawer">
+                <span class="qb-cart-icon" aria-hidden="true">▱</span>
+                <span class="qb-cart-label">Cart</span>
+                <span id="cart-count" class="qb-cart-count" hidden>0</span>
+            </button>
+        </div>
+    </header>
+
+    <dialog id="location-dialog" class="qb-location-dialog">
+        <form method="dialog" class="qb-location-form">
+            <button class="qb-close" value="cancel" aria-label="Close location selector">×</button>
+            <span class="qb-kicker">YOUR DELIVERY AREA</span>
+            <h2>Where should we deliver?</h2>
+            <label for="location-select">Choose a sample location</label>
+            <select id="location-select">
+                <option>Indiranagar, Bengaluru</option>
+                <option>Koramangala, Bengaluru</option>
+                <option>HSR Layout, Bengaluru</option>
+                <option>Whitefield, Bengaluru</option>
+            </select>
+            <button id="save-location" class="qb-primary-button" value="save">Use this location</button>
+        </form>
+    </dialog>
+
+    <nav class="qb-category-nav" aria-label="Grocery categories">
+        <a asp-action="Index" class="@(string.IsNullOrEmpty(Model.Category) ? "active" : "")">All groceries</a>
+        @foreach (var category in Model.Categories)
+        {
+            <a asp-action="Index" asp-route-category="@category" class="@(Model.Category == category ? "active" : "")">@category</a>
+        }
+        @if (User.IsInRole("StoreAdmin"))
+        {
+            <a asp-controller="Products" asp-action="Index" class="qb-manage-link">Manage products</a>
+        }
+    </nav>
+
+    <div id="cart-drawer" class="qb-cart-drawer" aria-hidden="true">
+        <button type="button" class="qb-cart-backdrop" data-cart-close aria-label="Close cart"></button>
+        <section class="qb-cart-panel" role="dialog" aria-modal="true" aria-labelledby="cart-title">
+            <header class="qb-cart-heading">
+                <div><span class="qb-kicker">YOUR ORDER</span><h2 id="cart-title">Your cart</h2></div>
+                <button type="button" class="qb-close" data-cart-close aria-label="Close cart">×</button>
+            </header>
+            <div id="cart-items" class="qb-cart-items" aria-live="polite"></div>
+            <footer class="qb-cart-footer">
+                <div class="qb-cart-total"><span>Subtotal</span><strong id="cart-subtotal">₹0.00</strong></div>
+                <a id="cart-checkout" class="qb-checkout-button" href="/Cart/Checkout">Proceed to checkout</a>
+                <small>Demo checkout · No online payment</small>
+            </footer>
+        </section>
+    </div>
+
+    <main class="qb-main">
+        @if (TempData["Success"] is string success)
+        {
+            <div class="qb-alert success" role="status">@success</div>
+        }
+        @if (TempData["Error"] is string error)
+        {
+            <div class="qb-alert error" role="alert">@error</div>
+        }
+        @if (Model.DatabaseError is not null)
+        {
+            <div class="qb-alert error" role="alert">@Model.DatabaseError</div>
+        }
+
+        @if (!hasFilters)
+        {
+            <section class="qb-hero">
+                <div class="qb-hero-copy">
+                    <span class="qb-hero-kicker">YOUR NEIGHBOURHOOD GROCERY RUN</span>
+                    <h1>Good food.<br />A little faster.</h1>
+                    <p>Fresh picks and everyday essentials, delivered from your local basket.</p>
+                    <a href="#daily-picks" class="qb-hero-cta">Shop daily picks <span aria-hidden="true">→</span></a>
+                    <div class="qb-hero-note"><span>●</span> Delivery in 10–20 minutes</div>
+                </div>
+                <div class="qb-hero-image-wrap">
+                    <img src="https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&w=1200&q=85" alt="Fresh colourful produce arranged at a market" />
+                    <div class="qb-hero-sticker"><strong>Fresh</strong><span>for today</span></div>
+                </div>
+                <div class="qb-hero-sun" aria-hidden="true"></div>
+            </section>
+
+            <section class="qb-category-section" aria-labelledby="browse-title">
+                <div class="qb-section-heading"><div><span class="qb-kicker">A GOOD PLACE TO START</span><h2 id="browse-title">Shop by category</h2></div></div>
+                <div class="qb-category-grid">
+                    @foreach (var category in Model.Categories)
+                    {
+                        <a asp-action="Index" asp-route-category="@category" class="qb-category-tile">
+                            <span class="qb-category-illustration" aria-hidden="true">
+                                @(category switch
+                                {
+                                    "Fruits & vegetables" => "🥑",
+                                    "Dairy & bakery" => "🥛",
+                                    "Snacks & beverages" => "🥤",
+                                    "Personal care" => "🧴",
+                                    "Household essentials" => "🧽",
+                                    _ => "🌾"
+                                })
+                            </span>
+                            <strong>@category</strong>
+                            <span class="qb-category-arrow" aria-hidden="true">↗</span>
+                        </a>
+                    }
+                </div>
+            </section>
+
+            @if (Model.FeaturedProducts.Count > 0)
+            {
+                <section class="qb-product-section" id="daily-picks">
+                    <div class="qb-section-heading">
+                        <div><span class="qb-kicker">FRESH FROM YOUR LOCAL STORE</span><h2>Daily essentials</h2></div>
+                        <a asp-action="Index" class="qb-view-all">View all <span aria-hidden="true">→</span></a>
+                    </div>
+                    <div class="qb-product-grid">
+                        @foreach (var product in Model.FeaturedProducts)
+                        {
+                            <partial name="_GroceryProductCard" model="product" />
+                        }
+                    </div>
+                </section>
+            }
+
+            @if (Model.BestSellers.Count > 0 || Model.FeaturedProducts.Count > 0)
+            {
+                <section class="qb-product-section">
+                    <div class="qb-section-heading">
+                        <div>
+                            <span class="qb-kicker">@(Model.BestSellers.Count > 0 ? "CUSTOMER FAVOURITES" : "QUICKBASKET PICKS")</span>
+                            <h2>@(Model.BestSellers.Count > 0 ? "Best sellers" : "Popular picks")</h2>
+                        </div>
+                    </div>
+                    <div class="qb-product-grid">
+                        @foreach (var product in Model.BestSellers.Count > 0 ? Model.BestSellers : Model.FeaturedProducts)
+                        {
+                            <partial name="_GroceryProductCard" model="product" />
+                        }
+                    </div>
+                </section>
+            }
+
+            @foreach (var shelf in Model.Shelves)
+            {
+                <section class="qb-product-section" id="@shelf.Name.ToLowerInvariant().Replace(" ", "-").Replace("&", "and")">
+                    <div class="qb-section-heading">
+                        <div><span class="qb-kicker">QUICKBASKET PICKS</span><h2>@shelf.Name</h2></div>
+                        <a asp-action="Index" asp-route-category="@shelf.Name" class="qb-view-all">View all <span aria-hidden="true">→</span></a>
+                    </div>
+                    <div class="qb-product-grid">
+                        @foreach (var product in shelf.Products)
+                        {
+                            <partial name="_GroceryProductCard" model="product" />
+                        }
+                    </div>
+                </section>
+            }
+        }
+        else
+        {
+            <section class="qb-results-section">
+                <div class="qb-section-heading">
+                    <div>
+                        <span class="qb-kicker">@(!string.IsNullOrEmpty(Model.Category) ? "SHOP CATEGORY" : "SEARCH RESULTS")</span>
+                        <h1>@(!string.IsNullOrEmpty(Model.Category) ? Model.Category : $"Results for ‘{Model.Search}’")</h1>
+                        <p>@Model.Products.Count product(s) found</p>
+                    </div>
+                    <a asp-action="Index" class="qb-view-all">Clear filters</a>
+                </div>
+                @if (Model.Products.Count == 0)
+                {
+                    <div class="qb-empty-state"><span aria-hidden="true">🧺</span><h2>Nothing in this basket yet</h2><p>Try another search or browse the grocery categories.</p><a asp-action="Index" class="qb-hero-cta">Browse groceries</a></div>
+                }
+                else
+                {
+                    <div class="qb-product-grid">
+                        @foreach (var product in Model.Products)
+                        {
+                            <partial name="_GroceryProductCard" model="product" />
+                        }
+                    </div>
+                }
+            </section>
+        }
+    </main>
+
+    <footer class="qb-footer">
+        <a asp-action="Index" class="qb-brand"><span class="qb-brand-mark">Q</span><span>QuickBasket</span></a>
+        <span>Fresh finds for the neighbourhood.</span>
+        <span>Demo checkout · Payment is not processed online</span>
+    </footer>
+</div>

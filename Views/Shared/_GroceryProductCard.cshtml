@@ -1,0 +1,47 @@
+@model BasicDotNetPostgresWebsite.Models.Product
+
+<article class="grocery-card" data-product-card data-product-id="@Model.Id">
+    <a asp-controller="Home" asp-action="Details" asp-route-id="@Model.Id" class="grocery-card-image" aria-label="View @Model.Name">
+        @if (!string.IsNullOrWhiteSpace(Model.ImageUrl))
+        {
+            <img src="@Model.ImageUrl" alt="@Model.Name" loading="lazy" data-product-image />
+        }
+        <span class="grocery-image-fallback" aria-hidden="true">🥬</span>
+        <span class="grocery-card-time">10–20 min</span>
+    </a>
+    <div class="grocery-card-content">
+        <a asp-controller="Home" asp-action="Details" asp-route-id="@Model.Id" class="grocery-card-name">@Model.Name</a>
+        <span class="grocery-card-unit">@Model.Unit</span>
+        <div class="grocery-card-price-row">
+            <div>
+                <strong class="grocery-price">₹@Model.Price.ToString("N2")</strong>
+                @if (Model.OriginalPrice is decimal originalPrice && originalPrice > Model.Price)
+                {
+                    <span class="grocery-original-price">₹@originalPrice.ToString("N2")</span>
+                    <span class="grocery-discount">@Math.Round((originalPrice - Model.Price) * 100 / originalPrice)% off</span>
+                }
+            </div>
+            <span class="grocery-stock @(Model.StockQuantity > 0 ? "in-stock" : "out-of-stock")">
+                @(Model.StockQuantity > 0 ? "In stock" : "Sold out")
+            </span>
+        </div>
+        <div class="grocery-card-actions" data-cart-controls>
+            <button type="button"
+                    class="grocery-add-button"
+                    data-cart-add
+                    data-product-id="@Model.Id"
+                    data-product-name="@Model.Name"
+                    data-product-price="@Model.Price.ToString(System.Globalization.CultureInfo.InvariantCulture)"
+                    data-product-image="@Model.ImageUrl"
+                    data-max-stock="@Model.StockQuantity"
+                    disabled="@(Model.StockQuantity <= 0)">
+                @(Model.StockQuantity > 0 ? "ADD" : "SOLD OUT")
+            </button>
+            <div class="grocery-quantity-control" data-card-quantity hidden>
+                <button type="button" data-card-decrease="@Model.Id" aria-label="Remove one @Model.Name">−</button>
+                <span data-card-quantity-value>0</span>
+                <button type="button" data-card-increase="@Model.Id" aria-label="Add one @Model.Name">+</button>
+            </div>
+        </div>
+    </div>
+</article>

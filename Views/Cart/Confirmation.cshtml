@@ -1,0 +1,40 @@
+@model BasicDotNetPostgresWebsite.Models.CustomerOrder
+
+@{
+    ViewData["Title"] = "Order confirmed";
+}
+
+<partial name="_QuickBasketHeader" />
+
+<main class="qb-details-page">
+    <section class="success-card qb-order-confirmation">
+        <div class="success-icon">✓</div>
+        <span class="qb-kicker">DEMO ORDER CONFIRMED</span>
+        <h1>Thanks, @Model.CustomerName.</h1>
+        <p>Order #@Model.Id is recorded. No online payment was processed.</p>
+
+        <div class="qb-confirmation-lines">
+            @foreach (var item in Model.Items)
+            {
+                <div class="checkout-line">
+                    <div class="checkout-line-image">
+                        @if (!string.IsNullOrWhiteSpace(item.ImageUrl))
+                        {
+                            <img src="@item.ImageUrl" alt="" />
+                        }
+                        else
+                        {
+                            <span>🥬</span>
+                        }
+                    </div>
+                    <div class="checkout-line-copy"><strong>@item.ProductName</strong><span>@item.Quantity × ₹@item.UnitPrice.ToString("N2")</span></div>
+                    <strong>₹@item.LineTotal.ToString("N2")</strong>
+                </div>
+            }
+        </div>
+
+        <div class="qb-confirmation-total"><span>Total</span><strong>₹@Model.TotalAmount.ToString("N2")</strong></div>
+        <p class="qb-confirmation-address">Delivering to: @Model.Address</p>
+        <a asp-controller="Home" asp-action="Index" class="qb-hero-cta">Continue shopping</a>
+    </section>
+</main>

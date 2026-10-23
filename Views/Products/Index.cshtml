@@ -1,0 +1,48 @@
+@model List<BasicDotNetPostgresWebsite.Models.Product>
+
+@{
+    ViewData["Title"] = "Manage products | QuickBasket";
+}
+
+<main class="qb-admin-page">
+    <header class="qb-admin-header">
+        <a asp-controller="Home" asp-action="Index" class="qb-brand"><span class="qb-brand-mark">Q</span><span>QuickBasket</span></a>
+        <a asp-action="Create" class="qb-admin-primary">+ New grocery</a>
+    </header>
+
+    <div class="qb-admin-title">
+        <div><span class="qb-kicker">STORE ADMINISTRATION</span><h1>Product inventory</h1><p>Manage customer-facing products, categories, prices, and available stock.</p></div>
+        <a asp-controller="Home" asp-action="Index" class="qb-view-all">Back to store</a>
+    </div>
+
+    @if (TempData["Success"] is string success)
+    {
+        <div class="qb-alert success" role="status">@success</div>
+    }
+
+    @if (Model.Count == 0)
+    {
+        <div class="qb-empty-state"><h2>No products yet</h2><a asp-action="Create" class="qb-admin-primary">Create the first product</a></div>
+    }
+    else
+    {
+        <div class="qb-admin-table-wrap">
+            <table class="qb-admin-table">
+                <thead><tr><th>Product</th><th>Category</th><th>Price</th><th>Stock</th><th>Unit</th><th>Actions</th></tr></thead>
+                <tbody>
+                    @foreach (var product in Model)
+                    {
+                        <tr>
+                            <td><div class="qb-admin-product"><span class="qb-admin-thumb">@(string.IsNullOrWhiteSpace(product.ImageUrl) ? "🥬" : "")</span><strong>@product.Name</strong></div></td>
+                            <td>@(product.Category?.Name ?? "Uncategorised")</td>
+                            <td>₹@product.Price.ToString("N2")</td>
+                            <td>@product.StockQuantity</td>
+                            <td>@product.Unit</td>
+                            <td><div class="qb-admin-actions"><a asp-action="Edit" asp-route-id="@product.Id">Edit</a><form asp-action="Delete" asp-route-id="@product.Id" method="post" onsubmit="return confirm('Delete @product.Name? This cannot be undone.');">@Html.AntiForgeryToken()<button type="submit">Delete</button></form></div></td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+</main>
