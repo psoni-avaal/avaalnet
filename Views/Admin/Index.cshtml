@@ -1,0 +1,17 @@
+@{
+    ViewData["Title"] = "Admin Dashboard";
+}
+
+<main class="admin-dashboard-page">
+    <a asp-controller="Home" asp-action="Index" class="qb-back-link">← Back to QuickBasket</a>
+    <header class="checkout-heading">
+        <span class="eyebrow">ADMIN ACCESS</span>
+        <h1>Admin Dashboard</h1>
+        <p>Manage users and products for QuickBasket.</p>
+    </header>
+
+    <div class="admin-menu">
+        <a asp-controller="Admin" asp-action="Users" class="admin-nav-link">Manage Users</a>
+        <a asp-controller="Admin" asp-action="Products" class="admin-nav-link">Manage Products</a>
+    </div>
+</main>

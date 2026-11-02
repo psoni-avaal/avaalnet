@@ -1,0 +1,40 @@
+@{
+    ViewData["Title"] = "Manage Users";
+}
+
+<main class="admin-management-page">
+    <a asp-controller="Admin" asp-action="Index" class="qb-back-link">← Back to Admin Dashboard</a>
+    <header class="checkout-heading">
+        <span class="eyebrow">USER MANAGEMENT</span>
+        <h1>Manage Users</h1>
+        <p>View, add, and manage all registered users.</p>
+    </header>
+
+    <div class="admin-actions">
+        <a asp-controller="Admin" asp-action="Users/Create" class="btn btn-secondary">Add New User</a>
+    </div>
+
+    <div class="admin-table-container">
+        <table class="admin-user-table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Role</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @* User list will be populated via Razor/API call *@
+                <tr>
+                    <td>1</td>
+                    <td>Admin User</td>
+                    <td>admin@example.com</td>
+                    <td>Admin</td>
+                    <td><a asp-controller="Admin" asp-action="GetUser" asp-route-id="1">View</a></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</main>

@@ -33,6 +33,7 @@ builder.Services.AddAuthorization(options =>
 {
     options.AddPolicy("StoreAdmin", policy => policy.RequireRole("StoreAdmin"));
 });
+builder.Services.AddAdminServices();
 builder.Services.AddScoped<IPasswordHasher<StoreUser>, PasswordHasher<StoreUser>>();
 
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection")

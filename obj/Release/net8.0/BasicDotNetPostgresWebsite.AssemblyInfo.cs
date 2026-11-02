@@ -10,10 +10,11 @@
 using System;
 using System.Reflection;
 
+[assembly: Microsoft.Extensions.Configuration.UserSecrets.UserSecretsIdAttribute("77fd33c7-b898-45a1-ae2b-3ba0ed6a909c")]
 [assembly: System.Reflection.AssemblyCompanyAttribute("BasicDotNetPostgresWebsite")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Release")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+1cd159dc1fa86b5ef0da32c6c079225916438c06")]
 [assembly: System.Reflection.AssemblyProductAttribute("BasicDotNetPostgresWebsite")]
 [assembly: System.Reflection.AssemblyTitleAttribute("BasicDotNetPostgresWebsite")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

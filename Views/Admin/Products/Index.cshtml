@@ -1,0 +1,42 @@
+@{
+    ViewData["Title"] = "Manage Products";
+}
+
+<main class="admin-management-page">
+    <a asp-controller="Admin" asp-action="Index" class="qb-back-link">← Back to Admin Dashboard</a>
+    <header class="checkout-heading">
+        <span class="eyebrow">PRODUCT MANAGEMENT</span>
+        <h1>Manage Products</h1>
+        <p>Add, view, and manage all available grocery products.</p>
+    </header>
+
+    <div class="admin-actions">
+        <a asp-controller="Admin" asp-action="Products/Create" class="btn btn-secondary">Add New Product</a>
+    </div>
+
+    <div class="admin-table-container">
+        <table class="admin-product-table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Price</th>
+                    <th>Stock</th>
+                    <th>Category</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @* Product list will be populated via Razor/API call *@
+                <tr>
+                    <td>1</td>
+                    <td>Sample Product</td>
+                    <td>₹10.00</td>
+                    <td>50</td>
+                    <td>Groceries</td>
+                    <td><a asp-controller="Admin" asp-action="GetProduct" asp-route-id="1">View</a></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</main>

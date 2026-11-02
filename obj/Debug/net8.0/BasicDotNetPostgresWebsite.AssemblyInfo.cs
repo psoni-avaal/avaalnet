@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("BasicDotNetPostgresWebsite")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+1cd159dc1fa86b5ef0da32c6c079225916438c06")]
 [assembly: System.Reflection.AssemblyProductAttribute("BasicDotNetPostgresWebsite")]
 [assembly: System.Reflection.AssemblyTitleAttribute("BasicDotNetPostgresWebsite")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

@@ -1,0 +1,63 @@
+@{
+    ViewData["Title"] = "Create Product";
+}
+
+<main class="admin-management-page">
+    <a asp-controller="Admin" asp-action="Products" class="qb-back-link">← Back to Product List</a>
+    <header class="checkout-heading">
+        <span class="eyebrow">NEW PRODUCT</span>
+        <h1>Create New Product</h1>
+        <p>Add a new product to the QuickBasket catalog.</p>
+    </header>
+
+    <form asp-controller="Admin" asp-action="Products/AddProduct" method="post" class="admin-form">
+        @Html.AntiForgeryToken()
+        <div asp-validation-summary="ModelOnly" class="validation-summary"></div>
+
+        <div class="form-field">
+            <label asp-for="Name">Product Name</label>
+            <input asp-for="Name" autocomplete="name" required />
+            <span asp-validation-for="Name" class="text-danger"></span>
+        </div>
+
+        <div class="form-field">
+            <label asp-for="Price">Selling Price (₹)</label>
+            <input asp-for="Price" type="number" step="0.01" required />
+            <span asp-validation-for="Price" class="text-danger"></span>
+        </div>
+
+        <div class="form-field">
+            <label asp-for="OriginalPrice">Original Price (for discount)</label>
+            <input asp-for="OriginalPrice" type="number" step="0.01" required />
+            <span asp-validation-for="OriginalPrice" class="text-danger"></span>
+        </div>
+
+        <div class="form-field">
+            <label asp-for="StockQuantity">Stock Quantity</label>
+            <input asp-for="StockQuantity" type="number" required />
+            <span asp-validation-for="StockQuantity" class="text-danger"></span>
+        </div>
+
+        <div class="form-field">
+            <label asp-for="CategoryId">Category</label>
+            <select asp-for="CategoryId" asp-items="Html.GetEnumSelectList<Category>()" required>
+                <option value="">-- Select Category --</option>
+            </select>
+            <span asp-validation-for="CategoryId" class="text-danger"></span>
+        </div>
+
+        <div class="form-field">
+            <label asp-for="ImageUrl">Product Image URL</label>
+            <input asp-for="ImageUrl" type="url" required />
+            <span asp-validation-for="ImageUrl" class="text-danger"></span>
+        </div>
+
+        <div class="form-field">
+            <label asp-for="Unit">Unit (e.g., kg, piece)</label>
+            <input asp-for="Unit" type="text" required />
+            <span asp-validation-for="Unit" class="text-danger"></span>
+        </div>
+
+        <button type="submit" class="btn btn-primary account-submit">Add Product</button>
+    </form>
+</main>

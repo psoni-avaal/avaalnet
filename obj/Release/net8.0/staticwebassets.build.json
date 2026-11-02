@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "NvkCz/TLJDYV43z3N7I/+NagdYod1Ovz/h5WAX6g2lQ=",
+  "Hash": "qQAv1ZJ0VMe7LVShPnYp85u5cf3nPcs3CnnMYsLi4JY=",
   "Source": "BasicDotNetPostgresWebsite",
   "BasePath": "_content/BasicDotNetPostgresWebsite",
   "Mode": "Default",
@@ -34,6 +34,44 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot/css/site.css"
+    },
+    {
+      "Identity": "/home/test-pc1/Downloads/BasicDotNetPostgresWebsiten/wwwroot/js/quickbasket.js",
+      "SourceId": "BasicDotNetPostgresWebsite",
+      "SourceType": "Discovered",
+      "ContentRoot": "/home/test-pc1/Downloads/BasicDotNetPostgresWebsiten/wwwroot/",
+      "BasePath": "_content/BasicDotNetPostgresWebsite",
+      "RelativePath": "js/quickbasket.js",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot/js/quickbasket.js"
+    },
+    {
+      "Identity": "/home/test-pc1/Downloads/BasicDotNetPostgresWebsiten/wwwroot/uploads/e95105bbb02349e293669f0c0eb551bc.jpeg",
+      "SourceId": "BasicDotNetPostgresWebsite",
+      "SourceType": "Discovered",
+      "ContentRoot": "/home/test-pc1/Downloads/BasicDotNetPostgresWebsiten/wwwroot/",
+      "BasePath": "_content/BasicDotNetPostgresWebsite",
+      "RelativePath": "uploads/e95105bbb02349e293669f0c0eb551bc.jpeg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot/uploads/e95105bbb02349e293669f0c0eb551bc.jpeg"
     }
   ]
 }

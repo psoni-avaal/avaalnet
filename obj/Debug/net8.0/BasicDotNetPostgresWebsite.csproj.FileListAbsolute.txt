@@ -62,3 +62,4 @@
 /home/test-pc1/Downloads/BasicDotNetPostgresWebsiten/bin/Debug/net8.0/publish/publish/publish/publish/publish/publish/appsettings.json
 /home/test-pc1/Downloads/BasicDotNetPostgresWebsiten/bin/Debug/net8.0/publish/publish/publish/publish/publish/publish/BasicDotNetPostgresWebsite.deps.json
 /home/test-pc1/Downloads/BasicDotNetPostgresWebsiten/bin/Debug/net8.0/publish/publish/publish/publish/publish/publish/BasicDotNetPostgresWebsite.runtimeconfig.json
+/home/test-pc1/Downloads/BasicDotNetPostgresWebsiten/obj/Debug/net8.0/BasicDotNetPostgresWebsite.sourcelink.json

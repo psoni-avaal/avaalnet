@@ -137,7 +137,7 @@ ON CONFLICT (name) DO NOTHING;
 INSERT INTO public.products (name, price, image_url, category_id, unit, stock_quantity)
 SELECT seed.name, seed.price, seed.image_url, category.id, seed.unit, seed.stock_quantity
 FROM (VALUES
-    ('Banana', 54.00::numeric, 'https://images.unsplash.com/photo-1571771894821-ce9b6c11b08e?auto=format&fit=crop&w=640&q=80', 'Fruits & vegetables', '6 pcs', 40),
+    ('BananA', 54.00::numeric, 'https://images.unsplash.com/photo-1571771894821-ce9b6c11b08e?auto=format&fit=crop&w=640&q=80', 'Fruits & vegetables', '6 pcs', 40),
     ('Tomato', 36.00::numeric, 'https://images.unsplash.com/photo-1546094096-0df4bcaaa337?auto=format&fit=crop&w=640&q=80', 'Fruits & vegetables', '500 g', 32),
     ('Red onion', 42.00::numeric, 'https://images.unsplash.com/photo-1508747703725-719777637510?auto=format&fit=crop&w=640&q=80', 'Fruits & vegetables', '1 kg', 28),
     ('Potato', 34.00::numeric, 'https://images.unsplash.com/photo-1518977676601-b53f82aba655?auto=format&fit=crop&w=640&q=80', 'Fruits & vegetables', '1 kg', 30),
