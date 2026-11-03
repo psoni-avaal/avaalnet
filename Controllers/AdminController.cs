@@ -1,5 +1,6 @@
 using BasicDotNetPostgresWebsite.Models;
 using BasicDotNetPostgresWebsite.Data;
+using BasicDotNetPostgresWebsite.DTOs;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
