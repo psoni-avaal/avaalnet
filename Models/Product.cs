@@ -28,6 +28,8 @@ public class Product
     [Range(0.01, 99999999.99)]
     public decimal? OriginalPrice { get; set; }
 
+    public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+
     public int? CategoryId { get; set; }
 
     public Category? Category { get; set; }

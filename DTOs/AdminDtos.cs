@@ -1,3 +1,4 @@
+using BasicDotNetPostgresWebsite.DTOs;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System;
@@ -63,6 +64,6 @@ public sealed record ProductResponse(
     int Id,
     string Name,
     decimal Price,
-    Category Category,
+    Category? Category,
     bool IsAvailable,
     DateTimeOffset CreatedAt);

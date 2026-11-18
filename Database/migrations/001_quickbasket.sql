@@ -58,7 +58,8 @@ CREATE TABLE IF NOT EXISTS public.orders (
 ALTER TABLE public.products
     ADD COLUMN IF NOT EXISTS unit character varying(40) NOT NULL DEFAULT '1 item',
     ADD COLUMN IF NOT EXISTS stock_quantity integer NOT NULL DEFAULT 25,
-    ADD COLUMN IF NOT EXISTS original_price numeric(10,2);
+    ADD COLUMN IF NOT EXISTS original_price numeric(10,2),
+    ADD COLUMN IF NOT EXISTS created_at timestamp with time zone NOT NULL DEFAULT now();
 
 DO $$
 BEGIN

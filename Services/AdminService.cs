@@ -11,9 +11,9 @@ namespace BasicDotNetPostgresWebsite.Services;
 public interface IAdminService
 {
     Task<StoreUser> CreateUserAsync(CreateUserRequest request, CancellationToken ct);
-    Task<StoreUserResponse> GetUserByIdAsync(int id, CancellationToken ct);
+    Task<StoreUserResponse?> GetUserByIdAsync(int id, CancellationToken ct);
     Task<Product> CreateProductAsync(CreateProductRequest request, CancellationToken ct);
-    Task<ProductResponse> GetProductByIdAsync(int id, CancellationToken ct);
+    Task<ProductResponse?> GetProductByIdAsync(int id, CancellationToken ct);
 }
 
 public sealed class AdminService : IAdminService
@@ -37,17 +37,19 @@ public sealed class AdminService : IAdminService
             PasswordHash = request.Password, // WARNING: Plain text password in demo
             Address = request.Address,
             IsAdmin = request.Name.Equals("Admin User", StringComparison.OrdinalIgnoreCase), // Simple admin check for demo
-            CreatedAt = DateTimeOffset.UtcNow
+            CreatedAt = DateTime.UtcNow
         };
         _context.StoreUsers.Add(newUser);
         await _context.SaveChangesAsync(ct);
         return newUser;
     }
 
-    public async Task<StoreUserResponse> GetUserByIdAsync(int id, CancellationToken ct)
+    public async Task<StoreUserResponse?> GetUserByIdAsync(int id, CancellationToken ct)
     {
         var user = await _context.StoreUsers.FindAsync(id);
-        return user is null ? null : new StoreUserResponse(user.Id, user.Name, user.Email, user.IsAdmin, user.CreatedAt);
+        return user is null
+            ? null
+            : new StoreUserResponse(user.Id, user.Name, user.Email, user.IsAdmin, new DateTimeOffset(user.CreatedAt, TimeSpan.Zero));
     }
 
     public async Task<Product> CreateProductAsync(CreateProductRequest request, CancellationToken ct)
@@ -67,14 +69,14 @@ public sealed class AdminService : IAdminService
             ImageUrl = request.ImageUrl,
             Unit = request.Unit,
             CategoryId = request.CategoryId,
-            CreatedAt = DateTimeOffset.UtcNow
+            CreatedAt = DateTime.UtcNow
         };
         _context.Products.Add(newProduct);
         await _context.SaveChangesAsync(ct);
         return newProduct;
     }
 
-    public async Task<ProductResponse> GetProductByIdAsync(int id, CancellationToken ct)
+    public async Task<ProductResponse?> GetProductByIdAsync(int id, CancellationToken ct)
     {
         var product = await _context.Products
             .Include(p => p.Category)
@@ -86,7 +88,7 @@ public sealed class AdminService : IAdminService
             product.Price,
             product.Category,
             product.StockQuantity > 0,
-            product.CreatedAt
+            new DateTimeOffset(product.CreatedAt, TimeSpan.Zero)
         );
     }
 }

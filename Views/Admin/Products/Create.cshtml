@@ -1,3 +1,5 @@
+@model BasicDotNetPostgresWebsite.DTOs.CreateProductRequest
+
 @{
     ViewData["Title"] = "Create Product";
 }
@@ -40,7 +42,7 @@
 
         <div class="form-field">
             <label asp-for="CategoryId">Category</label>
-            <select asp-for="CategoryId" asp-items="Html.GetEnumSelectList<Category>()" required>
+            <select asp-for="CategoryId" asp-items="ViewBag.Categories" required>
                 <option value="">-- Select Category --</option>
             </select>
             <span asp-validation-for="CategoryId" class="text-danger"></span>

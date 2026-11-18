@@ -30,6 +30,7 @@ public class AppDbContext(DbContextOptions<AppDbContext> options)
             entity.Property(p => p.Unit).HasColumnName("unit");
             entity.Property(p => p.StockQuantity).HasColumnName("stock_quantity");
             entity.Property(p => p.OriginalPrice).HasColumnName("original_price");
+            entity.Property(p => p.CreatedAt).HasColumnName("created_at");
             entity.HasOne(p => p.Category)
                 .WithMany()
                 .HasForeignKey(p => p.CategoryId)
@@ -112,4 +113,3 @@ public class AppDbContext(DbContextOptions<AppDbContext> options)
         });
     }
 }
-

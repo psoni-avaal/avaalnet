@@ -13,7 +13,7 @@ namespace BasicDotNetPostgresWebsite.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
-public class AdminController : ControllerBase
+public class AdminController : Controller
 {
     private readonly IAdminService _adminService;
 
